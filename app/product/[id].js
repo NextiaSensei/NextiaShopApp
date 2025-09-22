@@ -1,3 +1,4 @@
+import { WOO_API_URL, WOO_CONSUMER_KEY, WOO_CONSUMER_SECRET } from "@env";
 import axios from "axios";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -11,13 +12,12 @@ export default function ProductoDetalle() {
   useEffect(() => {
     if (!id) return; // Si no hay ID, no hace nada
 
-    axios
-      .get(`https://shop.nextiamarketing.com/wp-json/wc/v3/products/${id}`, {
-        auth: {
-          username: "ck_3861249787bfadc6a12201ac0feb1dde2e558c1a", // 🔹 Tu Consumer Key
-          password: "cs_bf739ec3a22a9cfc080e013346626d32ae502e71", // 🔹 Tu Consumer Secret
-        },
-      })
+    axios.get(`${WOO_API_URL}/products/${id}`, {
+  auth: {
+    username: WOO_CONSUMER_KEY,
+    password: WOO_CONSUMER_SECRET,
+  },
+})
       .then((res) => {
         setProducto(res.data);
         setLoading(false);
